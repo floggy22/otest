@@ -1,0 +1,32 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "mediawiki-123-custom"
+spec:
+  runPolicy: "Serial"
+  triggers:
+    - type: "ImageChange"
+  source:
+    images:
+    - from:
+        kind: "ImageStreamTag"
+        name: "mediawiki-123:latest"
+##        namespace: "pid-0047-garage-mediawiki-dev"  ## pay attention to namespace of imagae
+      pullSecret: 
+        name: 5640107-anorte-fleischer-pull-secret
+      paths:
+        - destinationDir: "app"
+          sourcePath: "/"
+    dockerfile: "FROM centos:7\n USER root\n RUN chgrp -R 0 /var && chmod -R g=u /var \n USER 1001"
+  strategy:
+    dockerStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "mediawiki-123:latest"       
+  output:
+    to:
+      kind: "DockerImage"
+      name: "registry.dev.paas.verwalt-berlin.de/pid-0047-garage-mediawiki-dev/mediawiki-123-custom:latest"
+    pullSecret: 
+      name: pid-0047-garage-mediawiki-dev-secret-pull
+
