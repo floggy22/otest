@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mediawiki
+  namespace: pid-0047-garage-mediawiki-dev
+spec: 
+  containers:
+    - name: web
+      image: registry.dev.paas.verwalt-berlin.de/pid-0047-garage-mediawiki-dev/mediawiki-123-custom
+  imagePullSecrets:
+    - name: pid-0047-garage-mediawiki-dev-secret-pull

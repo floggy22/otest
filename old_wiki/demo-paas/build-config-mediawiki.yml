@@ -1,0 +1,29 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "mw-custom"
+spec:
+  runPolicy: "Serial"
+  triggers:
+    - type: "ImageChange"
+  source:
+    images:
+    - from:
+        kind: "ImageStreamTag"
+        name: "mediawiki:latest"
+        namespace: "rw-mediawiki"  ## pay attention to namespace of imagae
+      pullSecret: 11899825-atos-tec-pull-secret
+      paths:
+        - destinationDir: "app"
+          sourcePath: "/"
+    dockerfile: "FROM centos:7\n USER root\n RUN chgrp -R 0 /var && chmod -R g=u /var \n USER 1001"
+  strategy:
+    dockerStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "mediawiki:latest"
+        namespace: "rw-mediawiki"
+  output:
+    to:
+      kind: "DockerImage"
+      name: "docker-registry.default.svc:5000/mediawiki/mw-custom2:latest"

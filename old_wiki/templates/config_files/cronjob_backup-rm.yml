@@ -1,0 +1,35 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata: 
+  name: backup-remove
+spec:
+  schedule: "30 17 * * *"  
+  successfulJobsHistoryLimit: 7
+  failedJobsHistoryLimit: 7
+  jobTemplate:             
+    spec:
+      template:
+        metadata:
+          labels:          
+            parent: "cronjob-backup-remove"
+        spec:
+          volumes: 
+          - name: dbbackup
+            persistentVolumeClaim:
+              claimName: pv002-backup
+          containers:
+          - name: dbbackup
+            image: "registry.dev.paas.verwalt-berlin.de/openshift/mariadb-101-rhel7:latest"
+#            pullSecret:
+#              name: pid-0047-garage-mediawiki-dev-secret-pull
+            volumeMounts:
+            - name: dbbackup
+              mountPath: /backup
+            command:
+              - 'bash'
+              - '-eo'
+              - 'pipefail'
+              - '-c' 
+              - > 
+                 find /backup/backup/ -iname "*" -ctime +7 -delete;
+          restartPolicy: Never 

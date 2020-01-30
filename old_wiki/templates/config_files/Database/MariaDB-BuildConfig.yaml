@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: mariadb-101-rhel7 # Anpassen für neues Build
+    type: database
+  name: mariadb-101-rhel7  # Anpassen für neues Build
+  namespace: pid-0047-garage-mediawiki-dev
+spec:
+  nodeSelector: null
+  output:
+ #   pushSecret:
+ #     name: pid-0009-umgebungef9-dev-secret-pull
+    to:
+      kind: DockerImage
+      name: registry.dev.paas.verwalt-berlin.de/pid-0047-garage-mediawiki-dev/mariadb-101-rhel7:1.0  # Anpassen für neues Build
+  postCommit: {}
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 150m
+      memory: 500Mi
+  runPolicy: Serial
+  source:
+    contextDir:  MariaDB-10.1-mediawiki # Anpassen für neues Build, siehe nName gitlab
+    git:
+      uri: https://git.dev.paas.verwalt-berlin.de/garage/pid-0047-garage-mediawiki-dev.git
+    sourceSecret:
+      name: gitsecret
+    type: Git
+  strategy:
+    dockerStrategy:
+#      pullSecret:
+ #       name: pid-0009-umgebungef9-dev-secret-pull
+    type: Docker

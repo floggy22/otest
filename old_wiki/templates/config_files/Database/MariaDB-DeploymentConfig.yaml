@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: mariadb-103-ef9
+  name: mariadb-103-ef9 #Namen anpassen bei neuer Deployment
+  namespace: pid-0009-umgebungef9-dev
+spec:
+  replicas: 1
+  selector:
+    app: mariadb-103-ef9
+    deploymentconfig: mariadb-103-ef9
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 5994
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb-103-ef9
+        deploymentconfig: mariadb-103-ef9
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_USER
+              value: admweiler
+            - name: MYSQL_PASSWORD
+              value: itdz1234
+            - name: MYSQL_DATABASE
+              value: testdb
+            - name: MYSQL_ROOT_PASSWORD
+              value: dbXXrootXX
+          image: registry.dev.paas.verwalt-berlin.de/pid-0009-umgebungef9-dev/mariadb-103-rhel7:1.0  # Hier Versionierung bei Erstellung Build vornehmen
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 3306
+            timeoutSeconds: 5
+          name: mariadb-103-ef9
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 3306
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mariadb-103-ef9  # Name bei "volumeMounts = Name "volumes". Keine Verbindung mit Pod-Namen
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        region: compute
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: mariadb-103-ef9
+          persistentVolumeClaim:
+            claimName: pv003-5g  # hier eineindeutig weil nur Speicher nur für dieses Projekt
+  test: false
+  triggers: []
