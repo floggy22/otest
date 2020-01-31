@@ -22,11 +22,13 @@ RUN sed -i 's/^post_max_size.*$/post_max_size = 128M/g' /etc/php.ini
 RUN sed -i 's/^upload_max_filesize.*$/upload_max_filesize = 128M/g' /etc/php.ini
 RUN sed -i 's/^;date.timezone.*$/date.timezone = Europe\/Berlin/g' /etc/php.ini
 COPY bluespice.conf /etc/httpd/conf.d/bluespice.conf
-RUN mkdir -p /var/www/bluespice
+RUN mkdir -p /var/www/bluespice/w
+RUN mkdir -p /var/www/html/w
 
 COPY bluespice.zip /tmp/bluespice.zip
 RUN yum -y install unzip
-RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/bluespice
+RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/
+#COPY LocalSettings.php /var/www/html/w/LocalSettings.php
 RUN chown apache /var/www -R && chgrp apache /var/www -R
 RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice
 RUN yum -y remove unzip
@@ -38,5 +40,6 @@ RUN yum clean all
 #COPY index.html /var/www/html/index.html
 #COPY index.php /var/www/html/index.php
 #COPY index.htm /var/www/bluespice/index.html
-
+#CMD httpd
 #ENTRYPOINT ["httpd", "-X"]
+ENTRYPOINT httpd && tail -f /var/log/httpd/*
