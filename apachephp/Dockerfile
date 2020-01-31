@@ -13,18 +13,20 @@ RUN yum -y install centos-release-scl
 RUN yum -y install rh-python36
 RUN scl enable rh-python36 bash
 
+#memcached problems..
+#RUN yum -y install memcached
+
+
 RUN sed -i 's/^max_execution_time.*$/max_execution_time = 600/g' /etc/php.ini
 RUN sed -i 's/^post_max_size.*$/post_max_size = 128M/g' /etc/php.ini
 RUN sed -i 's/^upload_max_filesize.*$/upload_max_filesize = 128M/g' /etc/php.ini
 RUN sed -i 's/^;date.timezone.*$/date.timezone = Europe\/Berlin/g' /etc/php.ini
 COPY bluespice.conf /etc/httpd/conf.d/bluespice.conf
 RUN mkdir -p /var/www/bluespice
+COPY bluespice.zip /var/www/bluespice.zip
 
 COPY index.html /var/www/html/index.html
-
 COPY index.php /var/www/html/index.php
 #COPY index.htm /var/www/bluespice/index.html
 RUN chown apache /var/www -R
-
-
 #ENTRYPOINT ["httpd", "-X"]

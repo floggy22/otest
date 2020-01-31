@@ -1,5 +1,5 @@
-# pid-0047-garage-mediawiki-dev
+Bluespice Test:
 
-
-How to install  Mediawiki on Centos/RHEL7
-https://www.linuxtechi.com/install-mediawiki-on-linux/
+Apache 80/443
+Elastic 9200
+parsoid 8000
