@@ -23,10 +23,20 @@ RUN sed -i 's/^upload_max_filesize.*$/upload_max_filesize = 128M/g' /etc/php.ini
 RUN sed -i 's/^;date.timezone.*$/date.timezone = Europe\/Berlin/g' /etc/php.ini
 COPY bluespice.conf /etc/httpd/conf.d/bluespice.conf
 RUN mkdir -p /var/www/bluespice
-COPY bluespice.zip /var/www/bluespice.zip
 
-COPY index.html /var/www/html/index.html
-COPY index.php /var/www/html/index.php
+COPY bluespice.zip /tmp/bluespice.zip
+RUN yum -y install unzip
+RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/bluespice
+RUN chown apache /var/www -R && chgrp apache /var/www -R
+RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice
+RUN yum -y remove unzip
+
+#DEBUG
+RUN yum -y install vim 
+
+RUN yum clean all
+#COPY index.html /var/www/html/index.html
+#COPY index.php /var/www/html/index.php
 #COPY index.htm /var/www/bluespice/index.html
-RUN chown apache /var/www -R
+
 #ENTRYPOINT ["httpd", "-X"]
