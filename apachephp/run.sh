@@ -13,7 +13,7 @@ if test -f "$FIRSTRUN"; then
     while true; do
         echo "WAIT FOR DB... "
        
-        php install.php bla admin --dbserver db --dbuser root --lang de --dbpass 123 --pass 123 --scriptpath "/w"
+        php install.php wiki admin --dbserver db --dbuser root --lang de --dbpass 123 --pass 123 --scriptpath "/w"
         if [ $? -eq 0 ]; then
             echo "FERTIG"
             break
