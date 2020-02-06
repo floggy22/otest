@@ -24,3 +24,5 @@ php install.php bla admin --dbserver db --dbpass 123 --pass "1qayxsw2"
 php install.php bla admin --dbuser root --dbserver db --dbpass 123 --pass "1qayxsw2"
 after install run
 php update.php (sch.. bluespice :())
+
+da hat jemand schon fast alles erledigt https://gitlab.com/baip/openshift-mediawiki/blob/master/libs/setup-env danke!
