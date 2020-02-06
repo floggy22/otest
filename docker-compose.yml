@@ -8,6 +8,9 @@ services:
             MYSQL_PASSWORT: 123
         networks:
             - dbnet
+        #test only
+        ports:
+            - "3306:3306"
     web:
         #build: ./apachephp
         image: mycent

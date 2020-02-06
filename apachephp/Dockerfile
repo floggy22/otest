@@ -37,10 +37,12 @@ RUN yum -y remove unzip
 RUN yum -y install vim 
 
 RUN yum clean all
-RUN touch /tmp/first.run
-#COPY index.html /var/www/html/index.html
+
+RUN mkdir -p /opt/mediarun
+RUN touch /opt/mediarun/first.run
+COPY run.sh /opt/mediarun
 #COPY index.php /var/www/html/index.php
 #COPY index.htm /var/www/bluespice/index.html
 #CMD httpd
 #ENTRYPOINT ["httpd", "-X"]
-ENTRYPOINT httpd && tail -f /var/log/httpd/*
+ENTRYPOINT /opt/mediarun/run.sh 
