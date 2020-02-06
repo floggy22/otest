@@ -18,7 +18,7 @@ if test -f "$FIRSTRUN"; then
             echo "FERTIG"
             break
         fi
-        sleep 2s
+        sleep 5s
     done
     php update.php
     popd
@@ -29,5 +29,5 @@ else
 fi
 
 httpd
-node /opt/parsoid/bin/server.js & 
+node /opt/parsoid/bin/server.js& #ERROR 
 tail -f /var/log/httpd/*
