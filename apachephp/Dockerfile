@@ -16,6 +16,8 @@ RUN scl enable rh-python36 bash
 #memcached problems..
 #RUN yum -y install memcached
 
+#NodeJS
+RUN yum -y install nodejs npm
 
 RUN sed -i 's/^max_execution_time.*$/max_execution_time = 600/g' /etc/php.ini
 RUN sed -i 's/^post_max_size.*$/post_max_size = 128M/g' /etc/php.ini
@@ -32,6 +34,17 @@ RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/
 RUN chown apache /var/www -R && chgrp apache /var/www -R
 RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice
 RUN yum -y remove unzip
+
+#parsoid
+RUN yum -y install git make
+RUN cd /opt && git clone --depth 1 --branch v0.10.0 https://gerrit.wikimedia.org/r/p/mediawiki/services/parsoid parsoid
+RUN cd /opt/parsoid && npm install
+RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* /opt/parsoid/
+#Single instance
+#RUN npm install -g pm2
+
+
+RUN yum -y remove make git
 
 #DEBUG
 RUN yum -y install vim 

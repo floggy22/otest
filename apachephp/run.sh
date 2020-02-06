@@ -18,7 +18,7 @@ if test -f "$FIRSTRUN"; then
             echo "FERTIG"
             break
         fi
-        sleep 10s
+        sleep 2s
     done
     php update.php
     popd
@@ -28,5 +28,6 @@ else
     echo "Normal"
 fi
 
-httpd 
+httpd
+node /opt/parsoid/bin/server.js & 
 tail -f /var/log/httpd/*
