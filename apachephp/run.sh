@@ -12,14 +12,14 @@ if test -f "$FIRSTRUN"; then
     while true; do
         echo "WAIT FOR DB... "
        
-        php install.php bla admin --dbserver db --dbpass 123 --pass 123
+        php install.php bla admin --dbserver db --dbuser root --lang de --dbpass 123 --pass 123
         if [ $? -eq 0 ]; then
             echo "FERTIG"
             break
         fi
         sleep 10s
     done
-    #php update.php
+    php update.php
     popd
     rm $FIRSTRUN
     popd
