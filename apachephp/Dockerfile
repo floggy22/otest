@@ -37,6 +37,7 @@ RUN yum -y remove unzip
 RUN yum -y install vim 
 
 RUN yum clean all
+RUN touch /tmp/first.run
 #COPY index.html /var/www/html/index.html
 #COPY index.php /var/www/html/index.php
 #COPY index.htm /var/www/bluespice/index.html

@@ -1,0 +1,28 @@
+version: '3'
+services:
+    db:
+        image: mariadb
+        environment: 
+            MYSQL_ROOT_PASSWORD: 123
+            MYSQL_USER: bluespice
+            MYSQL_PASSWORT: 123
+        networks:
+            - dbnet
+        ports:
+            - "3306:3306"
+    web:
+        #build: ./apachephp
+        image: mycent
+        ports:
+            - "8080:80"
+        networks: 
+            - dbnet
+        #volumes:
+        #- .:/code
+        #- logvolume01:/var/log
+        #links:
+        #- redis
+networks:
+    dbnet: {} 
+volumes:
+    logvolume01: {}
