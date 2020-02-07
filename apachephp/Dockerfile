@@ -43,7 +43,8 @@ RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* 
 
 
 RUN yum -y remove make unzip
-
+COPY 020-VisualEditor.php /var/www/html/w/settings.d/020-VisualEditor.php
+COPY 020-BlueSpiceVisualEditorConnector.php /var/www/html/w/settings.d/020-BlueSpiceVisualEditorConnector.php
 RUN chown apache:apache /var/www -Rf
 #DEBUG
 RUN yum -y install vim 
