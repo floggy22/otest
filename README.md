@@ -1,6 +1,6 @@
 Bluespice Test:
 
-Start Config: http://localhost:8080/mw-config/index.php REWRITE ERROR!
+Done: Start Config: http://localhost:8080/mw-config/index.php REWRITE ERROR!
 
 Apache 80/443
 Elastic 9200
@@ -25,7 +25,8 @@ php install.php bla admin --dbuser root --dbserver db --dbpass 123 --pass "1qayx
 after install run
 php update.php (sch.. bluespice :())
 
-da hat jemand schon fast alles erledigt https://gitlab.com/baip/openshift-mediawiki/blob/master/libs/setup-env danke!
+da hat jemand schon fast alles erledigt https://gitlab.com/baip/openshift-mediawiki/blob/master/libs/setup-env danke!  
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.8.6
 
 
 php install.php bla admin --dbserver db --dbpass 123 --pass 123
