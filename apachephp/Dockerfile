@@ -31,9 +31,7 @@ COPY bluespice.zip /tmp/bluespice.zip
 RUN yum -y install unzip
 RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/
 #COPY LocalSettings.php /var/www/html/w/LocalSettings.php
-RUN chown apache /var/www -R && chgrp apache /var/www -R
 RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice
-RUN yum -y remove unzip
 
 #parsoid
 RUN yum -y install git make
@@ -44,8 +42,9 @@ RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* 
 #RUN npm install -g pm2
 
 
-RUN yum -y remove make git
+RUN yum -y remove make git unzip
 
+RUN chown apache:apache /var/www -Rf
 #DEBUG
 RUN yum -y install vim 
 
