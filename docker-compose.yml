@@ -18,12 +18,20 @@ services:
             - "80:80"
         networks: 
             - dbnet
+            - appnet
         #volumes:
         #- .:/code
         #- logvolume01:/var/log
         #links:
         #- redis
+    pvisual:
+        image: pvisual
+        ports:
+            - "8000:8000"
+        networks: 
+            - appnet
 networks:
-    dbnet: {} 
+    dbnet: {}
+    appnet: {} 
 volumes:
     logvolume01: {}

@@ -16,8 +16,8 @@ RUN scl enable rh-python36 bash
 #memcached problems..
 #RUN yum -y install memcached
 
-#NodeJS
-RUN yum -y install nodejs npm
+#NodeJS visual
+#RUN yum -y install nodejs npm
 
 RUN sed -i 's/^max_execution_time.*$/max_execution_time = 600/g' /etc/php.ini
 RUN sed -i 's/^post_max_size.*$/post_max_size = 128M/g' /etc/php.ini
@@ -34,15 +34,17 @@ RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/ && r
 #RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice 
 
 #parsoid
-RUN yum -y install git make
-RUN cd /opt && git clone --depth 1 --branch v0.10.0 https://gerrit.wikimedia.org/r/p/mediawiki/services/parsoid parsoid && cd /opt/parsoid && npm install
-RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* /opt/parsoid/
+#RUN yum -y install git make
+#RUN cd /opt && git clone --depth 1 --branch v0.10.0 https://gerrit.wikimedia.org/r/p/mediawiki/services/parsoid parsoid && cd /opt/parsoid && npm install
+#RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* /opt/parsoid/
 
 #Single instance
 #RUN npm install -g pm2
 
 
-RUN yum -y remove make unzip
+#RUN yum -y remove make unzip
+RUN yum -y remove unzip
+
 COPY 020-VisualEditor.php /var/www/html/w/settings.d/020-VisualEditor.php
 COPY 020-BlueSpiceVisualEditorConnector.php /var/www/html/w/settings.d/020-BlueSpiceVisualEditorConnector.php
 RUN chown apache:apache /var/www -Rf

@@ -11,9 +11,9 @@ RUN cd /opt && git clone --depth 1 --branch v0.10.0 https://gerrit.wikimedia.org
 COPY localsettings.js /opt/parsoid/localsettings.js
 COPY config.yaml /opt/parsoid/config.yaml
 
-RUN yum -y remove git npm make && yum clean all
+RUN yum -y remove git make && yum clean all
 #DEBUG
-RUN yum -y install vim 
+#RUN yum -y install vim 
 
 RUN mkdir -p /opt/mediarun
 COPY run.sh /opt/mediarun

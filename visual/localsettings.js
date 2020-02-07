@@ -7,7 +7,9 @@
 
 exports.setup = function(parsoidConfig) {
 	parsoidConfig.dynamicConfig = function(domain) {
-		var baseUrl = Buffer.from( domain, 'base64').toString();
+		//var baseUrl = Buffer.from( domain, 'base64').toString();
+		var baseUrl = "http://web/w"
+		//domain = "web"
 		parsoidConfig.setMwApi({
 			uri: baseUrl + '/api.php',
 			domain: domain,
@@ -15,3 +17,5 @@ exports.setup = function(parsoidConfig) {
 		});
 	}
 };
+
+//parsoidConfig.setMwApi({ uri: 'https://your-mediawiki-server/api.php', prefix: 'localhost', domain: 'localhost' });

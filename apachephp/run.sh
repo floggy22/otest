@@ -29,8 +29,8 @@ else
 fi
 
 #httpd
-pushd /opt/parsoid
-exec node bin/server.js&
-popd
+#pushd /opt/parsoid
+#exec node bin/server.js&
+#popd
 exec httpd -DFOREGROUND "$@" 
 #tail -f /var/log/httpd/*
