@@ -44,9 +44,15 @@ RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/ && r
 
 #RUN yum -y remove make unzip
 RUN yum -y remove unzip
+#extend search
+#RUN yum -y install java
+#https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.2-x86_64.rpm
 
+#COPY 020-BlueSpiceExtendedSearch.php /var/www/html/w/settings.d/020-BlueSpiceExtendedSearch.php
 COPY 020-VisualEditor.php /var/www/html/w/settings.d/020-VisualEditor.php
 COPY 020-BlueSpiceVisualEditorConnector.php /var/www/html/w/settings.d/020-BlueSpiceVisualEditorConnector.php
+
+
 RUN chown apache:apache /var/www -Rf
 #DEBUG
 RUN yum -y install vim 

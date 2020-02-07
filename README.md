@@ -29,4 +29,5 @@ da hat jemand schon fast alles erledigt https://gitlab.com/baip/openshift-mediaw
 docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:6.8.6
 
 
-php install.php bla admin --dbserver db --dbpass 123 --pass 123
+php install.php bla admin --dbserver db --dbpass 123 --pass 123  
+https://de.wiki.bluespice.com/wiki/Setup:Installationsanleitung/Systemvorbereitung/Linux/Parsoid
