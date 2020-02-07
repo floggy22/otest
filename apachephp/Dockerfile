@@ -42,7 +42,7 @@ RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* 
 #RUN npm install -g pm2
 
 
-RUN yum -y remove make git unzip
+RUN yum -y remove make unzip
 
 RUN chown apache:apache /var/www -Rf
 #DEBUG

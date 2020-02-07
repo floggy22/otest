@@ -28,6 +28,9 @@ else
     echo "Normal"
 fi
 
-httpd
-node /opt/parsoid/bin/server.js& #ERROR 
-tail -f /var/log/httpd/*
+#httpd
+pushd /opt/parsoid
+exec node bin/server.js&
+popd
+exec httpd -DFOREGROUND "$@" 
+#tail -f /var/log/httpd/*
