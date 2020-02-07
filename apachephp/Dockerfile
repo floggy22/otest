@@ -24,20 +24,20 @@ RUN sed -i 's/^post_max_size.*$/post_max_size = 128M/g' /etc/php.ini
 RUN sed -i 's/^upload_max_filesize.*$/upload_max_filesize = 128M/g' /etc/php.ini
 RUN sed -i 's/^;date.timezone.*$/date.timezone = Europe\/Berlin/g' /etc/php.ini
 COPY bluespice.conf /etc/httpd/conf.d/bluespice.conf
-RUN mkdir -p /var/www/bluespice/w
+#RUN mkdir -p /var/www/bluespice/w
 RUN mkdir -p /var/www/html/w
 
 COPY bluespice.zip /tmp/bluespice.zip
 RUN yum -y install unzip
-RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/
+RUN cd /tmp && unzip bluespice.zip && cd bluespice && mv * /var/www/html/w/ && rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice
 #COPY LocalSettings.php /var/www/html/w/LocalSettings.php
-RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice
+#RUN rm -f /tmp/bluespice.zip && rm -fR /tmp/bluespice 
 
 #parsoid
 RUN yum -y install git make
-RUN cd /opt && git clone --depth 1 --branch v0.10.0 https://gerrit.wikimedia.org/r/p/mediawiki/services/parsoid parsoid
-RUN cd /opt/parsoid && npm install
+RUN cd /opt && git clone --depth 1 --branch v0.10.0 https://gerrit.wikimedia.org/r/p/mediawiki/services/parsoid parsoid && cd /opt/parsoid && npm install
 RUN cp /var/www/html/w/extensions/BlueSpiceVisualEditorConnector/docs/parsoid/* /opt/parsoid/
+
 #Single instance
 #RUN npm install -g pm2
 
